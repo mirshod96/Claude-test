@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tibbiy prezentatsiyalar · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh;
+    background:radial-gradient(circle at 15% 15%,#13324d 0%,#0a1830 45%,#060c1c 100%);
+    color:#eaf0ff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:48px 20px;
+  }
+  .head{text-align:center;max-width:760px;margin-bottom:44px}
+  .badge{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#5fdcff;background:rgba(95,220,255,.1);border:1px solid rgba(95,220,255,.25);padding:8px 16px;border-radius:999px;margin-bottom:22px}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:#5fdcff;box-shadow:0 0 12px #5fdcff}
+  h1{font-family:'Space Grotesk';font-size:clamp(28px,5vw,46px);line-height:1.15;letter-spacing:-.02em;margin-bottom:14px}
+  .head p{color:#9fb0d6;font-size:clamp(15px,1.6vw,18px);line-height:1.6}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;width:100%;max-width:920px}
+  a.card{
+    text-decoration:none;color:inherit;
+    border-radius:24px;padding:34px 30px;position:relative;overflow:hidden;
+    border:1px solid rgba(255,255,255,.12);
+    transition:transform .3s ease, box-shadow .3s ease;
+    display:flex;flex-direction:column;min-height:280px;
+  }
+  a.card:hover{transform:translateY(-8px)}
+  .c1{background:linear-gradient(155deg,#0a5c5e,#063b40)}
+  .c1:hover{box-shadow:0 30px 70px -30px rgba(29,224,196,.6)}
+  .c2{background:linear-gradient(155deg,#3a1d8f,#160a3a)}
+  .c2:hover{box-shadow:0 30px 70px -30px rgba(139,92,255,.6)}
+  .card .num{font-family:'Space Grotesk';font-size:14px;font-weight:700;letter-spacing:.1em;opacity:.7;margin-bottom:auto}
+  .icon{width:60px;height:60px;border-radius:17px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+  .c1 .icon{background:linear-gradient(135deg,#13b3a6,#1de0c4)}
+  .c2 .icon{background:linear-gradient(135deg,#8b5cff,#22e6ff)}
+  .icon svg{width:30px;height:30px;color:#06121a}
+  .card h2{font-family:'Space Grotesk';font-size:22px;line-height:1.25;margin-bottom:10px}
+  .card p{font-size:14.5px;line-height:1.55;color:rgba(234,240,255,.78);margin-bottom:20px}
+  .go{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;margin-top:auto}
+  .go svg{width:18px;height:18px;transition:transform .25s}
+  a.card:hover .go svg{transform:translateX(5px)}
+  .tag{display:inline-block;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.12);margin-bottom:18px;width:fit-content}
+  .tip{margin-top:40px;color:#7e90b8;font-size:13px;text-align:center;max-width:620px;line-height:1.6}
+  .tip b{color:#b9c6ea}
+  .foot{margin-top:30px;color:#5c6c92;font-size:12.5px}
+</style>
+</head>
+<body>
+  <div class="head">
+    <span class="badge"><span class="dot"></span>Tibbiy taqdimotlar to‘plami · 2026</span>
+    <h1>Ikki kreativ prezentatsiya</h1>
+    <p>O‘zbek tilida, zamonaviy UI/UX dizaynda tayyorlangan interaktiv slaydlar. Kerakli mavzuni tanlang.</p>
+  </div>
+
+  <div class="cards">
+    <a class="card c1" href="01-fizioterapiya.html">
+      <span class="num">PREZENTATSIYA 01 · 14 SLAYD</span>
+      <span class="tag">Fizioterapiya</span>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 3 1 5 3 2-2 3-3 5-3 4 0 6 4 4.5 8C19 16.65 12 21 12 21z"/></svg></div>
+      <h2>Akusherlik-ginekologiya va urologik-andrologik amaliyotda fizioterapiya</h2>
+      <p>Jismoniy omillarning davolash kuchi, sohalar bo‘yicha qo‘llanilishi, tos tubi reabilitatsiyasi va zamonaviy usullar.</p>
+      <span class="go">Ko‘rish <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card c2" href="02-raqamli-tibbiyot.html">
+      <span class="num">PREZENTATSIYA 02 · 15 SLAYD</span>
+      <span class="tag">Raqamli tibbiyot</span>
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+      <h2>VR/AR, AI va telemeditsina-telereabilitatsiyani klinik amaliyotga joriy etish</h2>
+      <p>Virtual reallik, sun’iy intellekt va masofaviy tibbiyot texnologiyalari — imkoniyatlar, integratsiya va istiqbol.</p>
+      <span class="go">Ko‘rish <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+
+  <p class="tip">Boshqaruv: <b>← →</b> tugmalari yoki ekranning chap/o‘ng tomoniga bosing. PDF qilish uchun brauzerda <b>Ctrl/Cmd + P</b> bosing.</p>
+  <div class="foot">© 2026 · O‘zbek tilida tayyorlangan</div>
+</body>
+</html>

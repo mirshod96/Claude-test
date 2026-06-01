@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Akusherlik-ginekologiya va urologik-andrologik amaliyotda fizioterapiya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg-1:#063b40;
+    --bg-2:#0a5c5e;
+    --teal:#13b3a6;
+    --teal-2:#1de0c4;
+    --rose:#ff7a93;
+    --rose-2:#ffb1a0;
+    --amber:#ffcf6b;
+    --ink:#06262a;
+    --paper:#f3fbfa;
+    --muted:#5e7d80;
+    --card:#ffffff;
+    --shadow:0 22px 60px -25px rgba(4,40,42,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Manrope',system-ui,sans-serif;
+    background:radial-gradient(circle at 20% 20%, #0d6e6c 0%, #063b40 45%, #04282b 100%);
+    color:var(--ink);
+    overflow:hidden;
+  }
+  .deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  .slide{
+    position:absolute;
+    width:min(94vw,1180px);
+    height:min(90vh,680px);
+    background:var(--paper);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    padding:54px 64px;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(28px) scale(.98);
+    transition:opacity .55s ease, transform .55s ease;
+    pointer-events:none;
+    display:flex;flex-direction:column;
+  }
+  .slide.active{opacity:1;transform:none;pointer-events:auto}
+  .slide::before{
+    content:"";position:absolute;right:-120px;top:-120px;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle,rgba(29,224,196,.22),transparent 70%);
+  }
+  .slide::after{
+    content:"";position:absolute;left:-90px;bottom:-90px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,122,147,.16),transparent 70%);
+  }
+
+  .kicker{
+    display:inline-flex;align-items:center;gap:9px;
+    font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);background:rgba(19,179,166,.12);
+    padding:8px 16px;border-radius:999px;width:fit-content;
+  }
+  .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+  h1,h2,h3{font-family:'Sora',sans-serif;color:var(--ink);line-height:1.12}
+  .slide h2{font-size:clamp(26px,3.4vw,42px);margin:18px 0 8px;letter-spacing:-.02em}
+  .lead{font-size:clamp(15px,1.5vw,18px);color:var(--muted);max-width:62ch;line-height:1.6}
+
+  /* ---- Title slide ---- */
+  .cover{background:linear-gradient(135deg,#063b40,#0a5c5e 55%,#0d7a72);color:#eafffb;justify-content:center}
+  .cover::before{background:radial-gradient(circle,rgba(29,224,196,.32),transparent 70%)}
+  .cover .kicker{color:#bff6ee;background:rgba(255,255,255,.12)}
+  .cover .kicker .dot{background:var(--teal-2)}
+  .cover h1{font-size:clamp(30px,5vw,58px);color:#fff;margin:22px 0 18px;max-width:20ch}
+  .cover .sub{font-size:clamp(15px,1.7vw,20px);color:#bdeee7;max-width:60ch;line-height:1.6}
+  .cover .meta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:10px 18px;border-radius:14px;font-weight:600;font-size:14px;color:#eafffb}
+  .chip svg{width:18px;height:18px}
+
+  /* ---- Layout helpers ---- */
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;z-index:2}
+  .grid{display:grid;gap:18px;margin-top:22px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{
+    background:var(--card);border-radius:18px;padding:22px;
+    border:1px solid rgba(8,38,42,.07);box-shadow:0 14px 30px -22px rgba(4,40,42,.5);
+    position:relative;overflow:hidden;
+  }
+  .card .ico{
+    width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--teal),var(--teal-2));color:#fff;margin-bottom:14px;
+  }
+  .card.rose .ico{background:linear-gradient(135deg,var(--rose),var(--rose-2))}
+  .card.amber .ico{background:linear-gradient(135deg,#ffb43d,var(--amber))}
+  .card h3{font-size:18px;margin-bottom:7px}
+  .card p{font-size:14.5px;color:var(--muted);line-height:1.55}
+  .card .ico svg{width:24px;height:24px}
+
+  ul.clean{list-style:none;display:flex;flex-direction:column;gap:13px;margin-top:18px}
+  ul.clean li{display:flex;gap:14px;align-items:flex-start;font-size:16px;line-height:1.5}
+  ul.clean li .b{
+    flex:none;width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    background:rgba(19,179,166,.14);color:var(--teal);font-weight:800;font-size:14px;
+  }
+  ul.clean li b{color:var(--ink)}
+  ul.clean li span{color:var(--muted)}
+
+  /* agenda */
+  .agenda{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 30px;margin-top:24px}
+  .agenda .it{display:flex;gap:16px;align-items:center;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid rgba(8,38,42,.06);box-shadow:0 10px 24px -20px rgba(4,40,42,.5)}
+  .agenda .num{font-family:'Sora';font-weight:800;font-size:22px;color:var(--teal);width:40px}
+  .agenda .it span{font-weight:600;font-size:15.5px}
+
+  /* two-col split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;margin-top:18px;flex:1}
+  .panel{background:linear-gradient(135deg,#0a5c5e,#0d7a72);color:#eafffb;border-radius:22px;padding:30px;height:100%;display:flex;flex-direction:column;justify-content:center}
+  .panel h3{color:#fff;font-size:22px;margin-bottom:14px}
+  .panel ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .panel ul li{display:flex;gap:11px;font-size:15px;color:#cfeee9;line-height:1.45}
+  .panel ul li svg{width:20px;height:20px;flex:none;color:var(--teal-2);margin-top:1px}
+
+  .stat-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+  .stat{background:#fff;border-radius:16px;padding:18px 22px;border:1px solid rgba(8,38,42,.07);flex:1;min-width:150px}
+  .stat .n{font-family:'Sora';font-weight:800;font-size:30px;color:var(--teal)}
+  .stat .l{font-size:13.5px;color:var(--muted);margin-top:4px}
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .pill{padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px;background:rgba(19,179,166,.12);color:#0a5c5e;border:1px solid rgba(19,179,166,.25)}
+  .pill.r{background:rgba(255,122,147,.13);color:#c64363;border-color:rgba(255,122,147,.3)}
+
+  /* indications vs contra */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:20px;flex:1}
+  .col{border-radius:20px;padding:26px;display:flex;flex-direction:column}
+  .col.ok{background:linear-gradient(160deg,#e9fbf7,#d4f6ee);border:1px solid rgba(19,179,166,.25)}
+  .col.no{background:linear-gradient(160deg,#fff0f2,#ffe1e6);border:1px solid rgba(255,122,147,.28)}
+  .col h3{display:flex;align-items:center;gap:10px;font-size:20px;margin-bottom:14px}
+  .col.ok h3{color:#0a7d70}.col.no h3{color:#c64363}
+  .col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .col ul li{font-size:14.5px;color:#3a5a5c;display:flex;gap:9px;line-height:1.4}
+  .col ul li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);margin-top:8px;flex:none}
+  .col.no ul li::before{background:var(--rose)}
+
+  /* closing */
+  .closing{background:linear-gradient(135deg,#063b40,#0d7a72);color:#eafffb;justify-content:center;text-align:center;align-items:center}
+  .closing::before{background:radial-gradient(circle,rgba(29,224,196,.3),transparent 70%)}
+  .closing h2{color:#fff;font-size:clamp(30px,4.4vw,50px)}
+  .closing .lead{color:#bdeee7;margin:16px auto 0;text-align:center}
+
+  .footer{position:absolute;left:64px;right:64px;bottom:22px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);z-index:2}
+  .footer .brand{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--teal)}
+  .footer .brand .logo{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--teal),var(--teal-2))}
+  .cover .footer,.closing .footer,.panel ~ .footer{color:rgba(234,255,251,.7)}
+  .cover .footer .brand,.closing .footer .brand{color:#bff6ee}
+
+  /* nav */
+  .nav{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:50;
+    background:rgba(6,40,42,.55);backdrop-filter:blur(10px);padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12)}
+  .nav button{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.14);color:#eafffb;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.2s}
+  .nav button:hover{background:var(--teal)}
+  .counter{color:#eafffb;font-weight:700;font-size:14px;min-width:62px;text-align:center;letter-spacing:.05em}
+  .progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--teal-2),var(--rose));z-index:60;transition:width .4s ease}
+  .dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:50}
+  .dots .d{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.25s}
+  .dots .d.on{background:var(--teal-2);transform:scale(1.45)}
+  .hint{position:fixed;bottom:30px;right:26px;color:rgba(255,255,255,.55);font-size:12px;z-index:40}
+
+  @media (max-width:720px){
+    .slide{padding:30px 24px}
+    .g2,.g3,.split,.duo,.agenda{grid-template-columns:1fr}
+    .footer{left:24px;right:24px}
+  }
+  @media print{
+    body{overflow:visible;background:#fff}
+    .deck{position:static;display:block}
+    .slide{position:relative;opacity:1;transform:none;page-break-after:always;width:100%;height:100vh;border-radius:0;box-shadow:none;margin:0}
+    .nav,.dots,.progress,.hint{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="bar"></div>
+<div class="dots" id="dots"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. COVER -->
+  <section class="slide cover active">
+    <div class="kicker"><span class="dot"></span>Tibbiy reabilitatsiya · Fizioterapiya</div>
+    <h1>Akusherlik-ginekologiya hamda urologik-andrologik amaliyotda fizioterapiya</h1>
+    <p class="sub">Jismoniy omillarning davolash-tiklash kuchidan ayollar va erkaklar reproduktiv salomatligini mustahkamlashda foydalanish — zamonaviy, dorisiz va xavfsiz yondashuv.</p>
+    <div class="meta">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 3 1 5 3 2-2 3-3 5-3 4 0 6 4 4.5 8C19 16.65 12 21 12 21z"/></svg>Reproduktiv salomatlik</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2 7 4-16 2 9h6"/></svg>Dorisiz davolash</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>14 slayd</span>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>Prezentatsiya · 2026</div></div>
+  </section>
+
+  <!-- 2. AGENDA -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Reja</div>
+    <h2>Taqdimot tarkibi</h2>
+    <p class="lead">Mavzu ketma-ket: asosiy tushunchalardan tortib har bir sohaga oid amaliy qo‘llanmalargacha.</p>
+    <div class="agenda">
+      <div class="it"><span class="num">01</span><span>Fizioterapiya tushunchasi va o‘rni</span></div>
+      <div class="it"><span class="num">02</span><span>Maqsad va vazifalari</span></div>
+      <div class="it"><span class="num">03</span><span>Asosiy fizik omillar</span></div>
+      <div class="it"><span class="num">04</span><span>Akusherlikda qo‘llanilishi</span></div>
+      <div class="it"><span class="num">05</span><span>Ginekologiyada qo‘llanilishi</span></div>
+      <div class="it"><span class="num">06</span><span>Tos tubi mushaklari reabilitatsiyasi</span></div>
+      <div class="it"><span class="num">07</span><span>Urologiya va andrologiyada</span></div>
+      <div class="it"><span class="num">08</span><span>Ko‘rsatma, qarshi ko‘rsatma, xulosa</span></div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>Reja</div></div>
+  </section>
+
+  <!-- 3. INTRO -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Tushuncha</div>
+    <h2>Fizioterapiya nima?</h2>
+    <div class="split">
+      <div>
+        <p class="lead">Fizioterapiya — tabiiy va sun’iy <b>jismoniy omillar</b> (elektr toki, magnit maydon, yorug‘lik, ultratovush, issiqlik, suv) yordamida kasalliklarni davolash, profilaktika qilish va organizmni tiklashga qaratilgan tibbiyot sohasi.</p>
+        <div class="pill-row">
+          <span class="pill">Dorisiz</span>
+          <span class="pill">Og‘riqsiz</span>
+          <span class="pill">Kam nojo‘ya ta’sir</span>
+          <span class="pill r">Kompleks davolash</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Reproduktiv tibbiyotda ahamiyati</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Surunkali yallig‘lanishlarni kamaytiradi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Qon va limfa aylanishini yaxshilaydi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Bitishmalar va og‘riqni yumshatadi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Dorilar samarasini kuchaytiradi</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>01 · Tushuncha</div></div>
+  </section>
+
+  <!-- 4. GOALS -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Maqsad va vazifalar</div>
+    <h2>Fizioterapiyaning vazifalari</h2>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 3 7h8c1-2 3-4 3-7a7 7 0 0 0-7-7z"/><path d="M9 21h6"/></svg></div>
+        <h3>Og‘riqni bartaraf etish</h3>
+        <p>Analgetik ta’sir orqali tos sohasidagi surunkali og‘riqni kamaytirish.</p>
+      </div>
+      <div class="card rose">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2 7 4-16 2 9h6"/></svg></div>
+        <h3>Yallig‘lanishga qarshi</h3>
+        <p>Infiltratlarni so‘rdirish, shishni kamaytirish va tiklanishni tezlashtirish.</p>
+      </div>
+      <div class="card amber">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Qon aylanishi</h3>
+        <p>Mahalliy mikrosirkulyatsiya va to‘qima oziqlanishini kuchaytirish.</p>
+      </div>
+      <div class="card amber">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></div>
+        <h3>Funksiyani tiklash</h3>
+        <p>Organlar va mushaklarning normal faoliyatini qayta tiklash.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5-3 8-7 8-12V5l-8-3-8 3v5c0 5 3 9 8 12z"/></svg></div>
+        <h3>Profilaktika</h3>
+        <p>Surunkalashuv va asoratlarning oldini olish, immunitetni qo‘llab-quvvatlash.</p>
+      </div>
+      <div class="card rose">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-8 0v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3>Hayot sifati</h3>
+        <p>Reproduktiv va jinsiy salomatlikni, bemorning umumiy holatini yaxshilash.</p>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>02 · Vazifalar</div></div>
+  </section>
+
+  <!-- 5. PHYSICAL FACTORS -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Metodlar</div>
+    <h2>Asosiy fizik omillar va usullar</h2>
+    <p class="lead">Har bir omil o‘ziga xos biologik ta’sirga ega — to‘g‘ri tanlash davolash samaradorligini belgilaydi.</p>
+    <div class="grid g3" style="margin-top:18px">
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div><h3>Elektroterapiya</h3><p>Galvanizatsiya, elektroforez, SMT, interferensiya toklari.</p></div>
+      <div class="card rose"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 16 0"/><path d="M8 12a4 4 0 0 1 8 0"/><circle cx="12" cy="12" r="1"/></svg></div><h3>Magnitoterapiya</h3><p>Doimiy va o‘zgaruvchan magnit maydoni — yallig‘lanishga qarshi.</p></div>
+      <div class="card amber"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div><h3>Lazeroterapiya</h3><p>Past intensivlikdagi lazer — to‘qima regeneratsiyasini tezlashtiradi.</p></div>
+      <div class="card amber"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Ultratovush / Fonoforez</h3><p>Mikromassaj effekti va dorilarni to‘qimaga yetkazish.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4 12H1M23 12h-3"/></svg></div><h3>Yorug‘lik / UB-nurlar</h3><p>UFO, infraqizil nurlanish — bakteritsid va isituvchi ta’sir.</p></div>
+      <div class="card rose"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M5 8l4 4M19 8l-4 4M3 18h18"/></svg></div><h3>Termo- va balneoterapiya</h3><p>Loy, parafin, mineral vannalar va kurort omillari.</p></div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>03 · Fizik omillar</div></div>
+  </section>
+
+  <!-- 6. OBSTETRICS -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Akusherlik</div>
+    <h2>Akusherlikda fizioterapiya</h2>
+    <div class="split">
+      <ul class="clean">
+        <li><span class="b">1</span><span><b>Homiladorlik davrida:</b> erta toksikoz, bel og‘riqlari va shishlarni yumshatishda (qat’iy ko‘rsatma bo‘yicha).</span></li>
+        <li><span class="b">2</span><span><b>Tug‘ruqdan keyin:</b> bachadon involyutsiyasini tezlashtirish, tikuvlar bitishini yaxshilash.</span></li>
+        <li><span class="b">3</span><span><b>Laktostaz va mastit:</b> ultratovush va magnit terapiya bilan sut bezlarini davolash.</span></li>
+        <li><span class="b">4</span><span><b>Episiotomiya/sezar:</b> chandiqlarni yumshatish, bitishmalar profilaktikasi.</span></li>
+      </ul>
+      <div class="panel">
+        <h3>Asosiy effektlar</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Bachadon qisqaruvini rag‘batlantirish</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Yiringli-yallig‘lanish asoratlari profilaktikasi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Tikuvlar tez bitishi va og‘riq kamayishi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Laktatsiyani me’yorlashtirish</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>04 · Akusherlik</div></div>
+  </section>
+
+  <!-- 7. GYNECOLOGY -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Ginekologiya</div>
+    <h2>Ginekologiyada fizioterapiya</h2>
+    <p class="lead">Ayollar genital sohasining surunkali kasalliklarida fizioterapiya kompleks davolashning ajralmas qismidir.</p>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 3 7h8c1-2 3-4 3-7a7 7 0 0 0-7-7z"/></svg></div><h3>Surunkali yallig‘lanishlar</h3><p>Salpingooforit, endometrit, servisitlarda — infiltratlarni so‘rdirish va og‘riqni kamaytirish.</p></div>
+      <div class="card rose"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 3 1 5 3 2-2 3-3 5-3 4 0 6 4 4.5 8C19 16.65 12 21 12 21z"/></svg></div><h3>Bepushtlik</h3><p>Naysimon-peritoneal bepushtlikda bitishmalarni yumshatish, naychalar o‘tkazuvchanligini tiklash.</p></div>
+      <div class="card amber"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg></div><h3>Menstrual buzilishlar</h3><p>Algodismenoreya va gormonal nomutanosiblikni tartibga solishda yordamchi vosita.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><h3>Operatsiyadan keyin</h3><p>Reabilitatsiya, chandiq va bitishmalar profilaktikasi, tiklanishni tezlashtirish.</p></div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>05 · Ginekologiya</div></div>
+  </section>
+
+  <!-- 8. PELVIC FLOOR -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Tos tubi reabilitatsiyasi</div>
+    <h2>Tos tubi mushaklarini tiklash</h2>
+    <div class="split">
+      <div>
+        <p class="lead">Tos tubi disfunksiyasi — siydik tutolmaslik, jinsiy a’zolar tushishi va og‘riqning asosiy sababi. Maxsus reabilitatsiya juda samarali.</p>
+        <ul class="clean" style="margin-top:14px">
+          <li><span class="b">●</span><span><b>Kegel mashqlari</b> — mushak tonusini mustahkamlash.</span></li>
+          <li><span class="b">●</span><span><b>BFB (biologik teskari aloqa)</b> — mashqlarni nazorat ostida bajarish.</span></li>
+          <li><span class="b">●</span><span><b>Elektromiostimulyatsiya</b> — zaiflashgan mushaklarni faollashtirish.</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Ko‘rsatkichlar</h3>
+        <div class="stat-row">
+          <div class="stat" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)"><div class="n" style="color:#1de0c4">↑70%</div><div class="l" style="color:#bdeee7">Siydik tutish nazorati yaxshilanishi</div></div>
+        </div>
+        <ul style="margin-top:16px">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Tug‘ruqdan keyingi tiklanish</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Stress-inkontinensiya davosi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Jinsiy funksiyani yaxshilash</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>06 · Tos tubi</div></div>
+  </section>
+
+  <!-- 9. UROLOGY -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Urologiya</div>
+    <h2>Urologik amaliyotda fizioterapiya</h2>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 6 6 9 6 13a6 6 0 0 0 12 0c0-4-2-7-6-11z"/></svg></div><h3>Surunkali prostatit</h3><p>Magnit-lazer va elektrostimulyatsiya — prostatada qon aylanishini yaxshilaydi, dimlanishni kamaytiradi.</p></div>
+      <div class="card rose"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2 7 4-16 2 9h6"/></svg></div><h3>Siydik tutolmaslik</h3><p>Tos tubi elektrostimulyatsiyasi va BFB orqali qovuq nazoratini tiklash.</p></div>
+      <div class="card amber"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div><h3>Siydik-tosh kasalligi</h3><p>Ultratovush va vibroterapiya mayda toshlar chiqishiga ko‘maklashadi.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><h3>Sistit va uretrit</h3><p>Yallig‘lanishga qarshi, og‘riqni kamaytiruvchi protseduralar.</p></div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>07 · Urologiya</div></div>
+  </section>
+
+  <!-- 10. ANDROLOGY -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Andrologiya</div>
+    <h2>Andrologik amaliyotda fizioterapiya</h2>
+    <div class="split">
+      <ul class="clean">
+        <li><span class="b">1</span><span><b>Erektil disfunksiya:</b> magnit-lazer terapiya va zarba to‘lqinli terapiya (LI-ESWT) qon aylanishini tiklaydi.</span></li>
+        <li><span class="b">2</span><span><b>Erkak bepushtligi:</b> spermatogenezni yaxshilash, dimlanishni kamaytirish.</span></li>
+        <li><span class="b">3</span><span><b>Surunkali tos og‘rig‘i:</b> elektro- va magnitoterapiya bilan kompleks davolash.</span></li>
+        <li><span class="b">4</span><span><b>Peyroni kasalligi:</b> fonoforez va lazer bilan chandiqlarni yumshatish.</span></li>
+      </ul>
+      <div class="panel">
+        <h3>Zamonaviy yo‘nalish</h3>
+        <p style="color:#cfeee9;font-size:15px;line-height:1.6;margin-bottom:14px">Past intensivlikdagi <b>zarba to‘lqinli terapiya (LI-ESWT)</b> erektil disfunksiyada angiogenezni rag‘batlantirib, dorisiz natija beradi.</p>
+        <div class="stat-row">
+          <div class="stat" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)"><div class="n" style="color:#1de0c4">Dorisiz</div><div class="l" style="color:#bdeee7">Fiziologik tiklanish</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>08 · Andrologiya</div></div>
+  </section>
+
+  <!-- 11. INDICATIONS / CONTRA -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Ko‘rsatma va qarshi ko‘rsatmalar</div>
+    <h2>Qachon mumkin, qachon mumkin emas?</h2>
+    <div class="duo">
+      <div class="col ok">
+        <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ko‘rsatmalar</h3>
+        <ul>
+          <li>Surunkali yallig‘lanish jarayonlari</li>
+          <li>Bitishma kasalligi va chandiqlar</li>
+          <li>Reabilitatsiya (operatsiya/tug‘ruqdan keyin)</li>
+          <li>Surunkali og‘riq sindromlari</li>
+          <li>Funksional bepushtlik shakllari</li>
+          <li>Tos tubi disfunksiyasi</li>
+        </ul>
+      </div>
+      <div class="col no">
+        <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Qarshi ko‘rsatmalar</h3>
+        <ul>
+          <li>Xavfli o‘smalar (onkologiya)</li>
+          <li>O‘tkir yiringli jarayonlar va isitma</li>
+          <li>Qon ketish va qon kasalliklari</li>
+          <li>Dekompensatsiyalangan og‘ir holatlar</li>
+          <li>Yurak-qon tomir yetishmovchiligi (og‘ir)</li>
+          <li>Fizik omilga individual chidamsizlik</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>09 · Ko‘rsatmalar</div></div>
+  </section>
+
+  <!-- 12. MODERN TRENDS -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Zamonaviy yo‘nalishlar</div>
+    <h2>Innovatsion fizioterapiya</h2>
+    <div class="grid g3">
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M5 8l4 4M19 8l-4 4M3 18h18"/></svg></div><h3>Zarba to‘lqinli terapiya</h3><p>ED va Peyroni kasalligida angiogenez va to‘qima yangilanishi.</p></div>
+      <div class="card rose"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 16 0"/><path d="M8 12a4 4 0 0 1 8 0"/></svg></div><h3>BFB-platformalar</h3><p>Aqlli sensorlar bilan tos tubi mushaklari treningi.</p></div>
+      <div class="card amber"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/></svg></div><h3>Teletibbiyot + fizioterapiya</h3><p>Masofadan reabilitatsiya nazorati va dasturlar.</p></div>
+    </div>
+    <div class="stat-row" style="margin-top:24px">
+      <div class="stat"><div class="n">↓40%</div><div class="l">Surunkali og‘riq kamayishi (kompleksda)</div></div>
+      <div class="stat"><div class="n">↑2x</div><div class="l">Reabilitatsiya tezligi</div></div>
+      <div class="stat"><div class="n">90%+</div><div class="l">Bemorlar qoniqishi</div></div>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>10 · Innovatsiyalar</div></div>
+  </section>
+
+  <!-- 13. CONCLUSION -->
+  <section class="slide">
+    <div class="kicker"><span class="dot"></span>Xulosa</div>
+    <h2>Asosiy xulosalar</h2>
+    <ul class="clean" style="margin-top:24px">
+      <li><span class="b">✓</span><span>Fizioterapiya — akusherlik-ginekologiya va urologik-andrologik amaliyotda <b>kompleks davolashning samarali bo‘g‘ini</b>.</span></li>
+      <li><span class="b">✓</span><span>Dorisiz, og‘riqsiz va kam nojo‘ya ta’sirli bo‘lib, <b>dorilar samarasini kuchaytiradi</b>.</span></li>
+      <li><span class="b">✓</span><span>Tos tubi reabilitatsiyasi va zamonaviy usullar <b>hayot sifatini sezilarli oshiradi</b>.</span></li>
+      <li><span class="b">✓</span><span>Har bir holatda <b>ko‘rsatma va qarshi ko‘rsatmalarni</b> qat’iy hisobga olish shart.</span></li>
+    </ul>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>Xulosa</div></div>
+  </section>
+
+  <!-- 14. THANKS -->
+  <section class="slide closing">
+    <div class="kicker"><span class="dot"></span>Yakun</div>
+    <h2>E’tiboringiz uchun rahmat!</h2>
+    <p class="lead">Savollaringiz bo‘lsa — muhokama qilishga tayyorman.<br/>Sog‘lom reproduktiv salomatlik — sifatli hayot kaliti.</p>
+    <div class="meta" style="margin-top:32px;justify-content:center;display:flex;gap:14px;flex-wrap:wrap">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 3 1 5 3 2-2 3-3 5-3 4 0 6 4 4.5 8C19 16.65 12 21 12 21z"/></svg>PhysioMed</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>2026</span>
+    </div>
+    <div class="footer"><div class="brand"><span class="logo"></span>PhysioMed</div><div>Rahmat</div></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Oldingi">‹</button>
+  <span class="counter" id="counter">1 / 14</span>
+  <button id="next" aria-label="Keyingi">›</button>
+</div>
+<div class="hint">← → tugmalari yoki bosing</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('bar');
+  const counter=document.getElementById('counter');
+  const dotsWrap=document.getElementById('dots');
+  let i=0;
+  slides.forEach((_,n)=>{const d=document.createElement('div');d.className='d'+(n===0?' on':'');d.onclick=()=>go(n);dotsWrap.appendChild(d);});
+  const dots=[...dotsWrap.children];
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    counter.textContent=(i+1)+' / '+slides.length;
+    bar.style.width=((i+1)/slides.length*100)+'%';
+  }
+  document.getElementById('next').onclick=()=>go(i+1);
+  document.getElementById('prev').onclick=()=>go(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')go(i+1);
+    if(e.key==='ArrowLeft')go(i-1);
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+  });
+  document.querySelector('.deck').addEventListener('click',e=>{
+    if(e.target.closest('.nav')||e.target.closest('a'))return;
+    const x=e.clientX, w=window.innerWidth;
+    if(x>w*0.62)go(i+1); else if(x<w*0.38)go(i-1);
+  });
+  go(0);
+</script>
+</body>
+</html>
